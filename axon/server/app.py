@@ -195,6 +195,18 @@ def create_app(workspace: Workspace | None = None, registry: Registry | None = N
         ws.save_settings(current)
         return _mask(current)
 
+    # ---- copilot ----
+
+    @app.post("/api/copilot/chat")
+    def copilot(body: dict):
+        from axon.copilot.service import copilot_chat
+
+        graph = body.get("workflow")
+        messages = body.get("messages", [])
+        if graph is None or not messages:
+            raise HTTPException(400, "Provide workflow and messages")
+        return copilot_chat(graph, messages, reg, ws.settings)
+
     # ---- packs ----
 
     @app.post("/api/packs/{name}/install", status_code=202)
