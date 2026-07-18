@@ -15,9 +15,11 @@ class NodeContext:
         log_cb: Callable[[str], None] | None = None,
         progress_cb: Callable[[float, dict | None], None] | None = None,
         cancel_event: threading.Event | None = None,
+        base_dir: Path | str | None = None,
     ):
         self.workspace = workspace
         self.settings = settings
+        self.base_dir = Path(base_dir) if base_dir else None
         self._log_cb = log_cb or (lambda m: None)
         self._progress_cb = progress_cb or (lambda f, m: None)
         self._cancel_event = cancel_event or threading.Event()
@@ -32,3 +34,10 @@ class NodeContext:
     @property
     def cancelled(self) -> bool:
         return self._cancel_event.is_set()
+
+    def resolve_path(self, path: str) -> Path:
+        """Resolve a possibly-relative file param against the workflow's directory."""
+        p = Path(path).expanduser()
+        if not p.is_absolute() and self.base_dir is not None:
+            p = self.base_dir / p
+        return p

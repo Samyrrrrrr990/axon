@@ -122,6 +122,7 @@ def execute_workflow(
                 RunEvent("node_progress", run_id, nid, {"fraction": f, "metrics": m})
             ),
             cancel_event=cancel,
+            base_dir=wf.meta.get("base_dir"),
         )
         kwargs = {}
         for (input_socket, src, src_socket) in wiring:
