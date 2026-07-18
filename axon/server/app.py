@@ -233,7 +233,7 @@ def create_app(workspace: Workspace | None = None, registry: Registry | None = N
                     data = json.loads(p.read_text())
                     out.append(
                         {
-                            "name": p.stem,
+                            "name": p.name.removesuffix(".axon.json"),
                             "title": data.get("name", p.stem),
                             "description": data.get("meta", {}).get("description", ""),
                             "domain": data.get("meta", {}).get("domain", ""),

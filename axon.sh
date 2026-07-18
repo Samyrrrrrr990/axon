@@ -10,4 +10,4 @@ if ! command -v uv >/dev/null 2>&1; then
 fi
 
 uv sync
-exec uv run axon start "$@"
+exec uv run python -m axon start "$@"
