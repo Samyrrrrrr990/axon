@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
+import { CheckCircleIcon, XIcon } from "@phosphor-icons/react";
 import { api } from "../api";
 import { useStore } from "../store";
 
 const KEY_FIELDS = [
-  { id: "openrouter", label: "OpenRouter", help: "Free. Create a key at openrouter.ai/keys. Powers the copilot by default." },
+  {
+    id: "openrouter",
+    label: "OpenRouter",
+    help: "Free. Create a key at openrouter.ai/keys. Powers the copilot by default.",
+  },
   { id: "anthropic", label: "Anthropic", help: "Optional, for Claude models." },
   { id: "openai", label: "OpenAI", help: "Optional, for GPT models." },
 ];
@@ -34,31 +39,35 @@ export default function Settings() {
   };
 
   return (
-    <div
-      className="fixed inset-0 z-40 flex items-center justify-center"
-      style={{ background: "rgb(0 0 0 / 0.6)" }}
-      onClick={() => setStore({ settingsOpen: false })}
-    >
+    <div className="overlay" onClick={() => setStore({ settingsOpen: false })}>
       <div
-        className="w-[560px] max-h-[80vh] overflow-y-auto rounded-2xl p-5"
-        style={{ background: "var(--bg-1)", border: "1px solid var(--line-bright)" }}
+        className="modal-card w-[580px] max-w-[92vw] max-h-[84vh] overflow-y-auto p-6"
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-label="Settings"
       >
-        <div className="font-display text-lg mb-4" style={{ color: "var(--text-0)" }}>
-          Settings
+        <div className="flex items-start justify-between mb-5">
+          <div className="font-display text-lg font-medium" style={{ color: "var(--text-0)" }}>
+            Settings
+          </div>
+          <button
+            className="btn btn-ghost !px-1.5 -mt-1 -mr-2"
+            onClick={() => setStore({ settingsOpen: false })}
+            aria-label="Close settings"
+          >
+            <XIcon size={16} />
+          </button>
         </div>
 
-        <div className="text-[11px] uppercase tracking-wider mb-2" style={{ color: "var(--text-1)" }}>
-          API keys
-        </div>
-        <div className="space-y-3 mb-6">
+        <div className="section-label mb-3">API keys</div>
+        <div className="space-y-4 mb-7">
           {KEY_FIELDS.map((f) => (
             <div key={f.id}>
-              <div className="flex items-baseline justify-between mb-1">
-                <span className="text-sm" style={{ color: "var(--text-0)" }}>
+              <div className="flex items-baseline justify-between mb-1.5 gap-4">
+                <span className="text-sm font-medium" style={{ color: "var(--text-0)" }}>
                   {f.label}
                 </span>
-                <span className="text-[11px]" style={{ color: "var(--text-1)" }}>
+                <span className="text-[11px] text-right" style={{ color: "var(--text-1)" }}>
                   {f.help}
                 </span>
               </div>
@@ -66,23 +75,20 @@ export default function Settings() {
                 type="password"
                 value={form.keys?.[f.id] ?? ""}
                 onChange={(e) => setForm({ ...form, keys: { ...form.keys, [f.id]: e.target.value } })}
-                placeholder="Paste key…"
-                className="w-full rounded-lg px-3 py-1.5 text-sm outline-none font-mono"
-                style={{ background: "var(--bg-2)", color: "var(--text-0)", border: "1px solid var(--line)" }}
+                placeholder="Paste key"
+                className="field font-mono"
+                autoComplete="off"
               />
             </div>
           ))}
         </div>
 
-        <div className="text-[11px] uppercase tracking-wider mb-2" style={{ color: "var(--text-1)" }}>
-          Copilot model
-        </div>
-        <div className="flex gap-2 mb-6">
+        <div className="section-label mb-3">Copilot model</div>
+        <div className="flex gap-2 mb-7">
           <select
             value={form.copilot?.provider ?? "openrouter"}
             onChange={(e) => setForm({ ...form, copilot: { ...form.copilot, provider: e.target.value } })}
-            className="rounded-lg px-2 py-1.5 text-sm outline-none"
-            style={{ background: "var(--bg-2)", color: "var(--text-0)", border: "1px solid var(--line)" }}
+            className="field !w-40"
           >
             {["openrouter", "anthropic", "openai", "ollama"].map((p) => (
               <option key={p} value={p}>
@@ -94,43 +100,46 @@ export default function Settings() {
             value={form.copilot?.model ?? ""}
             onChange={(e) => setForm({ ...form, copilot: { ...form.copilot, model: e.target.value } })}
             placeholder="model id"
-            className="flex-1 rounded-lg px-3 py-1.5 text-sm outline-none font-mono"
-            style={{ background: "var(--bg-2)", color: "var(--text-0)", border: "1px solid var(--line)" }}
+            className="field font-mono flex-1"
           />
         </div>
 
-        <div className="text-[11px] uppercase tracking-wider mb-2" style={{ color: "var(--text-1)" }}>
-          Capability packs
-        </div>
-        <div className="space-y-2 mb-6">
+        <div className="section-label mb-3">Capability packs</div>
+        <div className="space-y-2 mb-7">
           {Object.entries(packs).map(([name, info]) => (
-            <div key={name} className="rounded-lg p-3" style={{ background: "var(--bg-2)", border: "1px solid var(--line)" }}>
-              <div className="flex items-center gap-2">
+            <div
+              key={name}
+              className="rounded-xl p-3.5"
+              style={{ background: "var(--bg-2)", border: "1px solid var(--line)" }}
+            >
+              <div className="flex items-center gap-2.5">
                 <span className="text-sm" style={{ color: "var(--text-0)" }}>
                   {info.label}
                 </span>
-                <span className="text-[11px] font-mono" style={{ color: "var(--text-1)" }}>
+                <span className="text-[11px] font-mono" style={{ color: "var(--text-2)" }}>
                   {info.size_hint}
                 </span>
                 {info.installed ? (
-                  <span className="ml-auto text-xs" style={{ color: "var(--ok)" }}>
-                    installed
+                  <span
+                    className="ml-auto flex items-center gap-1 text-xs"
+                    style={{ color: "var(--ok)" }}
+                  >
+                    <CheckCircleIcon size={14} weight="fill" /> installed
                   </span>
                 ) : (
                   <button
+                    className="btn btn-primary ml-auto !py-1.5 !text-xs"
                     onClick={() => install(name)}
                     disabled={installing[name]}
-                    className="ml-auto px-3 py-1 rounded-lg text-xs font-medium disabled:opacity-50"
-                    style={{ background: "var(--accent)", color: "#0b0e14" }}
                   >
-                    {installing[name] ? "Installing…" : "Install"}
+                    {installing[name] ? "Installing" : "Install"}
                   </button>
                 )}
               </div>
               {installing[name] && installLog[name] && (
                 <pre
-                  className="mt-2 text-[10px] font-mono max-h-24 overflow-y-auto whitespace-pre-wrap"
-                  style={{ color: "var(--text-1)" }}
+                  className="mt-2.5 text-[10px] font-mono max-h-24 overflow-y-auto whitespace-pre-wrap rounded-lg p-2"
+                  style={{ color: "var(--text-1)", background: "var(--bg-0)" }}
                 >
                   {installLog[name].slice(-8).join("\n")}
                 </pre>
@@ -140,18 +149,10 @@ export default function Settings() {
         </div>
 
         <div className="flex justify-end gap-2">
-          <button
-            onClick={() => setStore({ settingsOpen: false })}
-            className="px-4 py-1.5 rounded-lg text-sm"
-            style={{ color: "var(--text-1)" }}
-          >
+          <button className="btn btn-ghost" onClick={() => setStore({ settingsOpen: false })}>
             Cancel
           </button>
-          <button
-            onClick={save}
-            className="px-4 py-1.5 rounded-lg text-sm font-medium"
-            style={{ background: "var(--accent)", color: "#0b0e14" }}
-          >
+          <button className="btn btn-primary" onClick={save}>
             Save settings
           </button>
         </div>

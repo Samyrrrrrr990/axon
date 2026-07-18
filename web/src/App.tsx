@@ -22,12 +22,40 @@ function Toast() {
   if (!toast) return null;
   return (
     <div
-      className="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-xl text-sm"
-      style={{ background: "var(--bg-3)", color: "var(--text-0)", border: "1px solid var(--line-bright)", boxShadow: "0 8px 30px rgb(0 0 0 / 0.5)" }}
+      className="toast-in fixed bottom-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-xl text-[13px]"
+      style={{
+        background: "var(--bg-3)",
+        color: "var(--text-0)",
+        border: "1px solid var(--line-bright)",
+        boxShadow: "0 12px 40px rgb(0 0 0 / 0.5)",
+      }}
+      role="status"
     >
       {toast}
     </div>
   );
+}
+
+function useKeyboardShortcuts() {
+  const save = useStore((s) => s.saveWorkflow);
+  const run = useStore((s) => s.runWorkflow);
+  const cancel = useStore((s) => s.cancelRun);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const mod = e.metaKey || e.ctrlKey;
+      if (!mod) return;
+      if (e.key === "s") {
+        e.preventDefault();
+        save();
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (useStore.getState().run.status === "running") cancel();
+        else run();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [save, run, cancel]);
 }
 
 export default function App() {
@@ -36,6 +64,7 @@ export default function App() {
   const loadSettings = useStore((s) => s.loadSettings);
   const handleEvent = useStore((s) => s.handleEvent);
   const setStore = useStore((s) => s.set);
+  useKeyboardShortcuts();
 
   useEffect(() => {
     loadCatalog();

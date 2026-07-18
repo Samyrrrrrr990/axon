@@ -16,11 +16,6 @@ function ParamField({
   onChange: (v: unknown) => void;
 }) {
   const current = value ?? schema.default;
-  const inputStyle = {
-    background: "var(--bg-2)",
-    color: "var(--text-0)",
-    border: "1px solid var(--line)",
-  } as const;
 
   return (
     <label className="block">
@@ -37,9 +32,7 @@ function ParamField({
         <select
           value={String(current ?? "")}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-lg px-2 py-1.5 text-sm outline-none"
-          style={inputStyle}
-        >
+          className="field">
           {(schema.options || []).map((o) => (
             <option key={o} value={o}>
               {o}
@@ -77,8 +70,7 @@ function ParamField({
           }}
           rows={Math.min(10, Math.max(3, String(current ?? "").split("\n").length))}
           spellCheck={false}
-          className="w-full rounded-lg px-2 py-1.5 text-xs outline-none font-mono resize-y"
-          style={inputStyle}
+          className="field font-mono !text-xs resize-y"
         />
       ) : schema.kind === "int" || schema.kind === "float" ? (
         <input
@@ -90,8 +82,7 @@ function ParamField({
           onChange={(e) =>
             onChange(schema.kind === "int" ? parseInt(e.target.value || "0", 10) : parseFloat(e.target.value || "0"))
           }
-          className="w-full rounded-lg px-2 py-1.5 text-sm outline-none font-mono"
-          style={inputStyle}
+          className="field font-mono"
         />
       ) : (
         <input
@@ -99,8 +90,7 @@ function ParamField({
           value={String(current ?? "")}
           placeholder={schema.kind === "filepath" ? "path/to/file" : undefined}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full rounded-lg px-2 py-1.5 text-sm outline-none"
-          style={inputStyle}
+          className="field"
         />
       )}
       {schema.help && (
@@ -151,15 +141,7 @@ export default function Inspector() {
       </div>
       <div className="flex border-b" style={{ borderColor: "var(--line)" }}>
         {(["params", "output"] as const).map((t) => (
-          <button
-            key={t}
-            onClick={() => setTab(t)}
-            className="flex-1 py-2 text-xs uppercase tracking-wider font-medium"
-            style={{
-              color: tab === t ? "var(--accent)" : "var(--text-1)",
-              borderBottom: tab === t ? "2px solid var(--accent)" : "2px solid transparent",
-            }}
-          >
+          <button key={t} onClick={() => setTab(t)} className={tab === t ? "tab active" : "tab"}>
             {t === "params" ? "Settings" : "Output"}
             {t === "output" && hasOutput && (
               <span className="ml-1" style={{ color: error ? "var(--err)" : "var(--ok)" }}>

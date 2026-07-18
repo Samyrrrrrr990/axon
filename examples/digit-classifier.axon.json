@@ -3,26 +3,133 @@
   "id": "example-digit-classifier",
   "name": "Handwritten Digit Classifier",
   "nodes": [
-    { "id": "load", "type": "data.sample_dataset", "params": { "name": "digits" }, "position": { "x": 60, "y": 200 } },
-    { "id": "split", "type": "data.split", "params": { "test_size": 0.2, "seed": 7 }, "position": { "x": 320, "y": 200 } },
-    { "id": "arch", "type": "deep.cnn", "params": { "channels": "16,32", "kernel": 3 }, "position": { "x": 320, "y": 420 } },
-    { "id": "train", "type": "deep.trainer", "params": { "task": "classification", "epochs": 12, "lr": 0.001, "batch_size": 64, "seed": 7 }, "position": { "x": 620, "y": 300 } },
-    { "id": "eval", "type": "deep.evaluate", "params": {}, "position": { "x": 900, "y": 180 } },
-    { "id": "confusion", "type": "ml.confusion_matrix", "params": {}, "position": { "x": 900, "y": 400 } }
+    {
+      "id": "load",
+      "type": "data.sample_dataset",
+      "params": {
+        "name": "digits"
+      },
+      "position": {
+        "x": 60,
+        "y": 200
+      }
+    },
+    {
+      "id": "split",
+      "type": "data.split",
+      "params": {
+        "test_size": 0.2,
+        "seed": 7
+      },
+      "position": {
+        "x": 320,
+        "y": 200
+      }
+    },
+    {
+      "id": "arch",
+      "type": "deep.cnn",
+      "params": {
+        "channels": "16,32",
+        "kernel": 3
+      },
+      "position": {
+        "x": 320,
+        "y": 420
+      }
+    },
+    {
+      "id": "train",
+      "type": "deep.trainer",
+      "params": {
+        "task": "classification",
+        "epochs": 12,
+        "lr": 0.001,
+        "batch_size": 64,
+        "seed": 7
+      },
+      "position": {
+        "x": 620,
+        "y": 300
+      }
+    },
+    {
+      "id": "eval",
+      "type": "deep.evaluate",
+      "params": {},
+      "position": {
+        "x": 900,
+        "y": 180
+      }
+    },
+    {
+      "id": "confusion",
+      "type": "ml.confusion_matrix",
+      "params": {},
+      "position": {
+        "x": 900,
+        "y": 400
+      }
+    }
   ],
   "edges": [
-    { "id": "e1", "source": "load", "source_socket": "dataset", "target": "split", "target_socket": "dataset" },
-    { "id": "e2", "source": "split", "source_socket": "train", "target": "train", "target_socket": "train" },
-    { "id": "e3", "source": "arch", "source_socket": "arch", "target": "train", "target_socket": "arch" },
-    { "id": "e4", "source": "train", "source_socket": "model", "target": "eval", "target_socket": "model" },
-    { "id": "e5", "source": "split", "source_socket": "test", "target": "eval", "target_socket": "test" },
-    { "id": "e6", "source": "train", "source_socket": "model", "target": "confusion", "target_socket": "model" },
-    { "id": "e7", "source": "split", "source_socket": "test", "target": "confusion", "target_socket": "test" }
+    {
+      "id": "e1",
+      "source": "load",
+      "source_socket": "dataset",
+      "target": "split",
+      "target_socket": "dataset"
+    },
+    {
+      "id": "e2",
+      "source": "split",
+      "source_socket": "train",
+      "target": "train",
+      "target_socket": "train"
+    },
+    {
+      "id": "e3",
+      "source": "arch",
+      "source_socket": "arch",
+      "target": "train",
+      "target_socket": "arch"
+    },
+    {
+      "id": "e4",
+      "source": "train",
+      "source_socket": "model",
+      "target": "eval",
+      "target_socket": "model"
+    },
+    {
+      "id": "e5",
+      "source": "split",
+      "source_socket": "test",
+      "target": "eval",
+      "target_socket": "test"
+    },
+    {
+      "id": "e6",
+      "source": "train",
+      "source_socket": "model",
+      "target": "confusion",
+      "target_socket": "model"
+    },
+    {
+      "id": "e7",
+      "source": "split",
+      "source_socket": "test",
+      "target": "confusion",
+      "target_socket": "test"
+    }
   ],
   "meta": {
     "description": "Train a small CNN on 8x8 handwritten digits. Watch the loss curve fall live, then inspect the confusion matrix.",
     "domain": "deep-learning",
-    "requires_packs": ["deep"],
-    "requires_keys": []
+    "requires_packs": [
+      "deep"
+    ],
+    "requires_keys": [],
+    "order": 2
   }
 }

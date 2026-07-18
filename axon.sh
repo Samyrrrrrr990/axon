@@ -9,5 +9,9 @@ if ! command -v uv >/dev/null 2>&1; then
   exit 1
 fi
 
-uv sync
-exec uv run python -m axon start "$@"
+# Create the environment on first launch only. Later launches must not re-sync,
+# because a sync would remove capability packs installed from the app.
+if [ ! -d ".venv" ]; then
+  uv sync
+fi
+exec uv run --no-sync python -m axon start "$@"

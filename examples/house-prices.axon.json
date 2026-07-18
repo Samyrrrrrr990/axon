@@ -3,28 +3,150 @@
   "id": "example-house-prices",
   "name": "Predict House Prices",
   "nodes": [
-    { "id": "load", "type": "data.sample_dataset", "params": { "name": "california_housing" }, "position": { "x": 60, "y": 200 } },
-    { "id": "clean", "type": "data.impute", "params": { "strategy": "median" }, "position": { "x": 320, "y": 200 } },
-    { "id": "split", "type": "data.split", "params": { "test_size": 0.2, "seed": 42 }, "position": { "x": 580, "y": 200 } },
-    { "id": "forest", "type": "ml.random_forest", "params": { "task": "regression", "n_estimators": 60, "max_depth": 12, "seed": 42 }, "position": { "x": 840, "y": 120 } },
-    { "id": "eval", "type": "ml.evaluate", "params": {}, "position": { "x": 1100, "y": 60 } },
-    { "id": "predict", "type": "ml.predict", "params": {}, "position": { "x": 1100, "y": 260 } },
-    { "id": "chart", "type": "util.chart", "params": { "x": "target", "y": "prediction", "kind": "scatter", "title": "Predicted vs actual price" }, "position": { "x": 1360, "y": 260 } }
+    {
+      "id": "load",
+      "type": "data.sample_dataset",
+      "params": {
+        "name": "california_housing"
+      },
+      "position": {
+        "x": 60,
+        "y": 200
+      }
+    },
+    {
+      "id": "clean",
+      "type": "data.impute",
+      "params": {
+        "strategy": "median"
+      },
+      "position": {
+        "x": 320,
+        "y": 200
+      }
+    },
+    {
+      "id": "split",
+      "type": "data.split",
+      "params": {
+        "test_size": 0.2,
+        "seed": 42
+      },
+      "position": {
+        "x": 580,
+        "y": 200
+      }
+    },
+    {
+      "id": "forest",
+      "type": "ml.random_forest",
+      "params": {
+        "task": "regression",
+        "n_estimators": 60,
+        "max_depth": 12,
+        "seed": 42
+      },
+      "position": {
+        "x": 840,
+        "y": 120
+      }
+    },
+    {
+      "id": "eval",
+      "type": "ml.evaluate",
+      "params": {},
+      "position": {
+        "x": 1100,
+        "y": 60
+      }
+    },
+    {
+      "id": "predict",
+      "type": "ml.predict",
+      "params": {},
+      "position": {
+        "x": 1100,
+        "y": 260
+      }
+    },
+    {
+      "id": "chart",
+      "type": "util.chart",
+      "params": {
+        "x": "target",
+        "y": "prediction",
+        "kind": "scatter",
+        "title": "Predicted vs actual price"
+      },
+      "position": {
+        "x": 1360,
+        "y": 260
+      }
+    }
   ],
   "edges": [
-    { "id": "e1", "source": "load", "source_socket": "dataset", "target": "clean", "target_socket": "dataset" },
-    { "id": "e2", "source": "clean", "source_socket": "dataset", "target": "split", "target_socket": "dataset" },
-    { "id": "e3", "source": "split", "source_socket": "train", "target": "forest", "target_socket": "train" },
-    { "id": "e4", "source": "forest", "source_socket": "model", "target": "eval", "target_socket": "model" },
-    { "id": "e5", "source": "split", "source_socket": "test", "target": "eval", "target_socket": "test" },
-    { "id": "e6", "source": "forest", "source_socket": "model", "target": "predict", "target_socket": "model" },
-    { "id": "e7", "source": "split", "source_socket": "test", "target": "predict", "target_socket": "dataset" },
-    { "id": "e8", "source": "predict", "source_socket": "dataset", "target": "chart", "target_socket": "dataset" }
+    {
+      "id": "e1",
+      "source": "load",
+      "source_socket": "dataset",
+      "target": "clean",
+      "target_socket": "dataset"
+    },
+    {
+      "id": "e2",
+      "source": "clean",
+      "source_socket": "dataset",
+      "target": "split",
+      "target_socket": "dataset"
+    },
+    {
+      "id": "e3",
+      "source": "split",
+      "source_socket": "train",
+      "target": "forest",
+      "target_socket": "train"
+    },
+    {
+      "id": "e4",
+      "source": "forest",
+      "source_socket": "model",
+      "target": "eval",
+      "target_socket": "model"
+    },
+    {
+      "id": "e5",
+      "source": "split",
+      "source_socket": "test",
+      "target": "eval",
+      "target_socket": "test"
+    },
+    {
+      "id": "e6",
+      "source": "forest",
+      "source_socket": "model",
+      "target": "predict",
+      "target_socket": "model"
+    },
+    {
+      "id": "e7",
+      "source": "split",
+      "source_socket": "test",
+      "target": "predict",
+      "target_socket": "dataset"
+    },
+    {
+      "id": "e8",
+      "source": "predict",
+      "source_socket": "dataset",
+      "target": "chart",
+      "target_socket": "dataset"
+    }
   ],
   "meta": {
     "description": "Train a random forest on California housing data, score it, and plot predictions against reality.",
     "domain": "classical-ml",
     "requires_packs": [],
-    "requires_keys": []
+    "requires_keys": [],
+    "order": 1
   }
 }

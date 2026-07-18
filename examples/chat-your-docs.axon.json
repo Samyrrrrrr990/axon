@@ -3,24 +3,119 @@
   "id": "example-chat-your-docs",
   "name": "Chat With Your Documents",
   "nodes": [
-    { "id": "docs", "type": "llm.load_docs", "params": { "path": "data/docs" }, "position": { "x": 60, "y": 160 } },
-    { "id": "embed", "type": "llm.embed", "params": { "model": "all-MiniLM-L6-v2" }, "position": { "x": 320, "y": 160 } },
-    { "id": "store", "type": "llm.vector_store", "params": { "collection": "my-docs" }, "position": { "x": 580, "y": 160 } },
-    { "id": "question", "type": "util.text_input", "params": { "text": "What is Axon and does it cost anything for research use?" }, "position": { "x": 320, "y": 380 } },
-    { "id": "answer", "type": "llm.rag_answer", "params": { "provider": "default", "model": "", "k": 3 }, "position": { "x": 860, "y": 260 } },
-    { "id": "out", "type": "util.text_output", "params": {}, "position": { "x": 1120, "y": 260 } }
+    {
+      "id": "docs",
+      "type": "llm.load_docs",
+      "params": {
+        "path": "data/docs"
+      },
+      "position": {
+        "x": 60,
+        "y": 160
+      }
+    },
+    {
+      "id": "embed",
+      "type": "llm.embed",
+      "params": {
+        "model": "all-MiniLM-L6-v2"
+      },
+      "position": {
+        "x": 320,
+        "y": 160
+      }
+    },
+    {
+      "id": "store",
+      "type": "llm.vector_store",
+      "params": {
+        "collection": "my-docs"
+      },
+      "position": {
+        "x": 580,
+        "y": 160
+      }
+    },
+    {
+      "id": "question",
+      "type": "util.text_input",
+      "params": {
+        "text": "What is Axon and does it cost anything for research use?"
+      },
+      "position": {
+        "x": 320,
+        "y": 380
+      }
+    },
+    {
+      "id": "answer",
+      "type": "llm.rag_answer",
+      "params": {
+        "provider": "default",
+        "model": "",
+        "k": 3
+      },
+      "position": {
+        "x": 860,
+        "y": 260
+      }
+    },
+    {
+      "id": "out",
+      "type": "util.text_output",
+      "params": {},
+      "position": {
+        "x": 1120,
+        "y": 260
+      }
+    }
   ],
   "edges": [
-    { "id": "e1", "source": "docs", "source_socket": "docs", "target": "embed", "target_socket": "docs" },
-    { "id": "e2", "source": "embed", "source_socket": "embeddings", "target": "store", "target_socket": "embeddings" },
-    { "id": "e3", "source": "store", "source_socket": "store", "target": "answer", "target_socket": "store" },
-    { "id": "e4", "source": "question", "source_socket": "text", "target": "answer", "target_socket": "question" },
-    { "id": "e5", "source": "answer", "source_socket": "text", "target": "out", "target_socket": "text" }
+    {
+      "id": "e1",
+      "source": "docs",
+      "source_socket": "docs",
+      "target": "embed",
+      "target_socket": "docs"
+    },
+    {
+      "id": "e2",
+      "source": "embed",
+      "source_socket": "embeddings",
+      "target": "store",
+      "target_socket": "embeddings"
+    },
+    {
+      "id": "e3",
+      "source": "store",
+      "source_socket": "store",
+      "target": "answer",
+      "target_socket": "store"
+    },
+    {
+      "id": "e4",
+      "source": "question",
+      "source_socket": "text",
+      "target": "answer",
+      "target_socket": "question"
+    },
+    {
+      "id": "e5",
+      "source": "answer",
+      "source_socket": "text",
+      "target": "out",
+      "target_socket": "text"
+    }
   ],
   "meta": {
     "description": "Retrieval-augmented answers over your own files: embed locally, index locally, answer with the model of your choice.",
     "domain": "llm",
-    "requires_packs": ["rag"],
-    "requires_keys": ["openrouter"]
+    "requires_packs": [
+      "rag"
+    ],
+    "requires_keys": [
+      "openrouter"
+    ],
+    "order": 4
   }
 }

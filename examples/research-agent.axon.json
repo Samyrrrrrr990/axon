@@ -3,20 +3,83 @@
   "id": "example-research-agent",
   "name": "Research Agent",
   "nodes": [
-    { "id": "task", "type": "util.text_input", "params": { "text": "If a model's accuracy improves from 82.4% to 91.7%, what is the relative error reduction? Show your work." }, "position": { "x": 60, "y": 160 } },
-    { "id": "calc", "type": "llm.tool", "params": { "name": "calculator", "description": "Evaluate a Python arithmetic expression. Args: {\"expression\": \"(1 - 0.083/0.176) * 100\"}", "code": "result = str(eval(args[\"expression\"], {\"__builtins__\": {}}, {}))" }, "position": { "x": 60, "y": 380 } },
-    { "id": "agent", "type": "llm.agent", "params": { "provider": "default", "model": "", "max_steps": 6 }, "position": { "x": 420, "y": 260 } },
-    { "id": "answer", "type": "util.text_output", "params": {}, "position": { "x": 720, "y": 180 } }
+    {
+      "id": "task",
+      "type": "util.text_input",
+      "params": {
+        "text": "If a model's accuracy improves from 82.4% to 91.7%, what is the relative error reduction? Show your work."
+      },
+      "position": {
+        "x": 60,
+        "y": 160
+      }
+    },
+    {
+      "id": "calc",
+      "type": "llm.tool",
+      "params": {
+        "name": "calculator",
+        "description": "Evaluate a Python arithmetic expression. Args: {\"expression\": \"(1 - 0.083/0.176) * 100\"}",
+        "code": "result = str(eval(args[\"expression\"], {\"__builtins__\": {}}, {}))"
+      },
+      "position": {
+        "x": 60,
+        "y": 380
+      }
+    },
+    {
+      "id": "agent",
+      "type": "llm.agent",
+      "params": {
+        "provider": "default",
+        "model": "",
+        "max_steps": 6
+      },
+      "position": {
+        "x": 420,
+        "y": 260
+      }
+    },
+    {
+      "id": "answer",
+      "type": "util.text_output",
+      "params": {},
+      "position": {
+        "x": 720,
+        "y": 180
+      }
+    }
   ],
   "edges": [
-    { "id": "e1", "source": "task", "source_socket": "text", "target": "agent", "target_socket": "task" },
-    { "id": "e2", "source": "calc", "source_socket": "tool", "target": "agent", "target_socket": "tools" },
-    { "id": "e3", "source": "agent", "source_socket": "text", "target": "answer", "target_socket": "text" }
+    {
+      "id": "e1",
+      "source": "task",
+      "source_socket": "text",
+      "target": "agent",
+      "target_socket": "task"
+    },
+    {
+      "id": "e2",
+      "source": "calc",
+      "source_socket": "tool",
+      "target": "agent",
+      "target_socket": "tools"
+    },
+    {
+      "id": "e3",
+      "source": "agent",
+      "source_socket": "text",
+      "target": "answer",
+      "target_socket": "text"
+    }
   ],
   "meta": {
     "description": "An agent that reasons about your task and calls a calculator tool when it needs real arithmetic.",
     "domain": "agents",
     "requires_packs": [],
-    "requires_keys": ["openrouter"]
+    "requires_keys": [
+      "openrouter"
+    ],
+    "order": 5
   }
 }

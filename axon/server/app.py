@@ -234,6 +234,7 @@ def create_app(workspace: Workspace | None = None, registry: Registry | None = N
                     out.append(
                         {
                             "name": p.name.removesuffix(".axon.json"),
+                            "order": data.get("meta", {}).get("order", 99),
                             "title": data.get("name", p.stem),
                             "description": data.get("meta", {}).get("description", ""),
                             "domain": data.get("meta", {}).get("domain", ""),
@@ -244,7 +245,7 @@ def create_app(workspace: Workspace | None = None, registry: Registry | None = N
                     )
                 except Exception:
                     continue
-        return out
+        return sorted(out, key=lambda e: e.get("order", 99))
 
     @app.post("/api/examples/{name}/open")
     def open_example(name: str):

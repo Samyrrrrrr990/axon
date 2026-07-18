@@ -3,27 +3,149 @@
   "id": "example-finetune-tiny-llm",
   "name": "Fine-tune a Tiny LLM",
   "nodes": [
-    { "id": "csv", "type": "data.load_csv", "params": { "path": "data/quotes.csv", "delimiter": ",", "header": true }, "position": { "x": 60, "y": 140 } },
-    { "id": "docs", "type": "ft.docs_from_dataset", "params": { "text_column": "quote" }, "position": { "x": 320, "y": 140 } },
-    { "id": "model", "type": "ft.load_model", "params": { "model_name": "distilgpt2" }, "position": { "x": 60, "y": 360 } },
-    { "id": "tokens", "type": "ft.text_data", "params": { "max_length": 64 }, "position": { "x": 600, "y": 240 } },
-    { "id": "lora", "type": "ft.lora_finetune", "params": { "r": 8, "alpha": 16, "epochs": 3, "lr": 0.0002, "batch_size": 4, "seed": 42 }, "position": { "x": 880, "y": 300 } },
-    { "id": "sample", "type": "ft.generate", "params": { "prompt": "The secret to doing great research is", "max_new_tokens": 40, "temperature": 0.8 }, "position": { "x": 1160, "y": 300 } },
-    { "id": "out", "type": "util.text_output", "params": {}, "position": { "x": 1420, "y": 300 } }
+    {
+      "id": "csv",
+      "type": "data.load_csv",
+      "params": {
+        "path": "data/quotes.csv",
+        "delimiter": ",",
+        "header": true
+      },
+      "position": {
+        "x": 60,
+        "y": 140
+      }
+    },
+    {
+      "id": "docs",
+      "type": "ft.docs_from_dataset",
+      "params": {
+        "text_column": "quote"
+      },
+      "position": {
+        "x": 320,
+        "y": 140
+      }
+    },
+    {
+      "id": "model",
+      "type": "ft.load_model",
+      "params": {
+        "model_name": "distilgpt2"
+      },
+      "position": {
+        "x": 60,
+        "y": 360
+      }
+    },
+    {
+      "id": "tokens",
+      "type": "ft.text_data",
+      "params": {
+        "max_length": 64
+      },
+      "position": {
+        "x": 600,
+        "y": 240
+      }
+    },
+    {
+      "id": "lora",
+      "type": "ft.lora_finetune",
+      "params": {
+        "r": 8,
+        "alpha": 16,
+        "epochs": 3,
+        "lr": 0.0002,
+        "batch_size": 4,
+        "seed": 42
+      },
+      "position": {
+        "x": 880,
+        "y": 300
+      }
+    },
+    {
+      "id": "sample",
+      "type": "ft.generate",
+      "params": {
+        "prompt": "The secret to doing great research is",
+        "max_new_tokens": 40,
+        "temperature": 0.8
+      },
+      "position": {
+        "x": 1160,
+        "y": 300
+      }
+    },
+    {
+      "id": "out",
+      "type": "util.text_output",
+      "params": {},
+      "position": {
+        "x": 1420,
+        "y": 300
+      }
+    }
   ],
   "edges": [
-    { "id": "e1", "source": "csv", "source_socket": "dataset", "target": "docs", "target_socket": "dataset" },
-    { "id": "e2", "source": "docs", "source_socket": "docs", "target": "tokens", "target_socket": "docs" },
-    { "id": "e3", "source": "model", "source_socket": "hf_model", "target": "tokens", "target_socket": "hf_model" },
-    { "id": "e4", "source": "model", "source_socket": "hf_model", "target": "lora", "target_socket": "hf_model" },
-    { "id": "e5", "source": "tokens", "source_socket": "tokenized", "target": "lora", "target_socket": "tokenized" },
-    { "id": "e6", "source": "lora", "source_socket": "model", "target": "sample", "target_socket": "model" },
-    { "id": "e7", "source": "sample", "source_socket": "text", "target": "out", "target_socket": "text" }
+    {
+      "id": "e1",
+      "source": "csv",
+      "source_socket": "dataset",
+      "target": "docs",
+      "target_socket": "dataset"
+    },
+    {
+      "id": "e2",
+      "source": "docs",
+      "source_socket": "docs",
+      "target": "tokens",
+      "target_socket": "docs"
+    },
+    {
+      "id": "e3",
+      "source": "model",
+      "source_socket": "hf_model",
+      "target": "tokens",
+      "target_socket": "hf_model"
+    },
+    {
+      "id": "e4",
+      "source": "model",
+      "source_socket": "hf_model",
+      "target": "lora",
+      "target_socket": "hf_model"
+    },
+    {
+      "id": "e5",
+      "source": "tokens",
+      "source_socket": "tokenized",
+      "target": "lora",
+      "target_socket": "tokenized"
+    },
+    {
+      "id": "e6",
+      "source": "lora",
+      "source_socket": "model",
+      "target": "sample",
+      "target_socket": "model"
+    },
+    {
+      "id": "e7",
+      "source": "sample",
+      "source_socket": "text",
+      "target": "out",
+      "target_socket": "text"
+    }
   ],
   "meta": {
     "description": "LoRA-finetune distilgpt2 on a small set of quotes about research, then sample from your tuned model. Runs on CPU.",
     "domain": "fine-tuning",
-    "requires_packs": ["finetune"],
-    "requires_keys": []
+    "requires_packs": [
+      "finetune"
+    ],
+    "requires_keys": [],
+    "order": 3
   }
 }

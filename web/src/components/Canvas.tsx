@@ -18,18 +18,20 @@ function EmptyState() {
   const setStore = useStore((s) => s.set);
   return (
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-      <div className="text-center pointer-events-auto">
-        <div className="font-display text-xl mb-2" style={{ color: "var(--text-1)" }}>
-          An empty bench.
+      <div className="text-center pointer-events-auto msg-in max-w-sm px-6">
+        <svg width="56" height="56" viewBox="0 0 22 22" aria-hidden className="mx-auto mb-4 opacity-90">
+          <circle cx="5" cy="11" r="3" fill="var(--accent)" />
+          <circle cx="17" cy="5" r="2.4" fill="var(--sock-dataset)" />
+          <circle cx="17" cy="17" r="2.4" fill="var(--sock-model)" />
+          <path d="M7.5 10L14.8 5.8M7.5 12L14.8 16.2" stroke="var(--line-bright)" strokeWidth="1.2" />
+        </svg>
+        <div className="font-display text-lg mb-1.5" style={{ color: "var(--text-0)" }}>
+          Your canvas is empty
         </div>
-        <div className="text-sm mb-4" style={{ color: "var(--text-1)" }}>
-          Drag a node from the palette, ask the copilot, or start from an example.
+        <div className="text-[13px] leading-relaxed mb-5" style={{ color: "var(--text-1)" }}>
+          Drag a node from the palette, describe what you want to the copilot, or open a working example.
         </div>
-        <button
-          onClick={() => setStore({ galleryOpen: true })}
-          className="px-4 py-2 rounded-lg text-sm font-medium"
-          style={{ background: "var(--accent)", color: "#0b0e14" }}
-        >
+        <button className="btn btn-primary" onClick={() => setStore({ galleryOpen: true })}>
           Open examples
         </button>
       </div>
@@ -59,11 +61,14 @@ export default function Canvas() {
     [addNode, screenToFlowPosition],
   );
 
+  const nodeStatus = useStore((s) => s.run.nodeStatus);
   const coloredEdges: Edge[] = edges.map((e) => {
     const src = nodes.find((n) => n.id === e.source);
     const type = src ? specById[src.data.nodeType as string]?.outputs[e.sourceHandle || ""] : undefined;
     const color = SOCKET_COLORS[type || "any"] || "var(--sock-any)";
-    return { ...e, style: { stroke: color, strokeOpacity: 0.75 } };
+    // A wire lights up while its destination node is computing.
+    const active = nodeStatus[e.target] === "running";
+    return { ...e, animated: active, style: { stroke: color, strokeOpacity: active ? 1 : 0.7 } };
   });
 
   return (

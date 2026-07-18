@@ -42,8 +42,8 @@ function Heatmap({ chart }: { chart: ChartData }) {
         {chart.title} (rows: actual, columns: predicted)
       </div>
       <div
-        className="grid gap-[2px] font-mono text-xs"
-        style={{ gridTemplateColumns: `auto repeat(${n}, minmax(2rem, 3rem))` }}
+        className="grid gap-[2px] font-mono text-[10px] max-w-full"
+        style={{ gridTemplateColumns: `auto repeat(${n}, minmax(0, 2.5rem))` }}
       >
         <div />
         {labels.map((l) => (
