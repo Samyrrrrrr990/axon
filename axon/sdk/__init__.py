@@ -12,9 +12,17 @@ from axon.sdk.containers import (
     VectorStoreRef,
     compatible,
 )
+from axon.sdk.context import NodeContext
+from axon.sdk.node import node
 from axon.sdk.params import Bool, Choice, FilePath, Float, Int, Json, Param, Secret, Str, Text
+from axon.sdk.registry import REGISTRY, NodeDef, Registry
 
 __all__ = [
+    "NodeContext",
+    "NodeDef",
+    "REGISTRY",
+    "Registry",
+    "node",
     "SOCKET_TYPES",
     "AnyValue",
     "Bool",
