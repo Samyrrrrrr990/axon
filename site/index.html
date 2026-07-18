@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="color-scheme" content="dark" />
+<title>Axon: build real AI visually</title>
+<meta name="description" content="Axon is a local-first visual workspace for machine learning. Wire nodes, press Run, and train real models on your own machine. Free for research." />
+<meta property="og:title" content="Axon: build real AI visually" />
+<meta property="og:description" content="Train, fine-tune, and orchestrate machine learning models on a canvas. Local-first, free for research." />
+<meta property="og:image" content="https://samyrrrrrr990.github.io/axon/assets/canvas.png" />
+<meta property="og:type" content="website" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Ccircle cx='5' cy='11' r='3' fill='%23ffb224'/%3E%3Ccircle cx='17' cy='5' r='2.4' fill='%234cc9f0'/%3E%3Ccircle cx='17' cy='17' r='2.4' fill='%23b47aff'/%3E%3Cpath d='M7.5 10L14.8 5.8M7.5 12L14.8 16.2' stroke='%2333405a' stroke-width='1.6'/%3E%3C/svg%3E" />
+<style>
+@font-face { font-family: "Space Grotesk"; src: url("fonts/space-grotesk-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Space Grotesk"; src: url("fonts/space-grotesk-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "IBM Plex Sans"; src: url("fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+
+:root {
+  --bg-0: #0b0e14;
+  --bg-1: #10141d;
+  --bg-2: #171d29;
+  --bg-3: #202836;
+  --line: #222b3b;
+  --line-bright: #33405a;
+  --text-0: #e8edf5;
+  --text-1: #939eb1;
+  --text-2: #5f6b80;
+  --accent: #ffb224;
+  --accent-soft: rgb(255 178 36 / 0.12);
+  --cyan: #4cc9f0;
+  --violet: #b47aff;
+  --green: #6ee7a0;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg-0);
+  color: var(--text-0);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+::selection { background: rgb(255 178 36 / 0.28); }
+
+.wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.display { font-family: "Space Grotesk", sans-serif; }
+.mono { font-family: "IBM Plex Mono", monospace; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  border-radius: 10px; padding: 12px 22px;
+  font-size: 15px; font-weight: 600; font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 0.01em; cursor: pointer; border: 1px solid transparent;
+  transition: transform 140ms var(--ease), background 140ms var(--ease), border-color 140ms var(--ease);
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--accent); color: #14100a; }
+.btn-primary:hover { background: #ffc14d; }
+.btn-outline { border-color: var(--line-bright); color: var(--text-0); }
+.btn-outline:hover { border-color: var(--text-1); background: var(--bg-2); }
+.btn-small { padding: 9px 16px; font-size: 13.5px; }
+
+/* ---------- Nav ---------- */
+nav {
+  position: sticky; top: 0; z-index: 50; height: 64px;
+  background: rgb(11 14 20 / 0.82); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-inner { height: 64px; display: flex; align-items: center; gap: 28px; }
+.brand { display: flex; align-items: center; gap: 9px; font-family: "Space Grotesk", sans-serif; font-weight: 600; letter-spacing: 0.08em; font-size: 16px; }
+.nav-links { display: flex; gap: 24px; margin-left: 12px; font-size: 14px; color: var(--text-1); }
+.nav-links a { transition: color 140ms var(--ease); }
+.nav-links a:hover { color: var(--text-0); }
+.nav-cta { margin-left: auto; }
+@media (max-width: 760px) { .nav-links { display: none; } }
+
+/* ---------- Hero ---------- */
+.hero { padding: 72px 0 40px; overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: 5fr 6fr; gap: 56px; align-items: center; }
+@media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; gap: 40px; } }
+h1 {
+  font-family: "Space Grotesk", sans-serif; font-weight: 600;
+  font-size: clamp(38px, 4.6vw, 56px); line-height: 1.06; letter-spacing: -0.02em;
+  margin-bottom: 20px;
+}
+h1 .amber { color: var(--accent); }
+.hero-sub { font-size: 17.5px; color: var(--text-1); max-width: 44ch; margin-bottom: 30px; }
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.shot-frame {
+  border: 1px solid var(--line-bright); border-radius: 14px; overflow: hidden;
+  background: var(--bg-1);
+  box-shadow: 0 30px 90px rgb(0 0 0 / 0.55), 0 0 120px rgb(255 178 36 / 0.06);
+}
+.shot-bar { display: flex; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--line); background: var(--bg-2); }
+.shot-bar span { width: 10px; height: 10px; border-radius: 50%; background: var(--bg-3); }
+.shot-bar span:first-child { background: var(--line-bright); }
+
+/* ---------- Install strip ---------- */
+.install { padding: 26px 0 0; }
+.install-box {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--bg-1);
+  padding: 14px 18px;
+}
+.install-box code { font-family: "IBM Plex Mono", monospace; font-size: 13.5px; color: var(--green); overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+.install-box code::before { content: "$ "; color: var(--text-2); }
+.copy-btn {
+  margin-left: auto; border: 1px solid var(--line-bright); background: none; color: var(--text-1);
+  border-radius: 8px; padding: 7px 14px; font-size: 12.5px; font-family: "IBM Plex Sans", sans-serif;
+  cursor: pointer; transition: color 140ms var(--ease), border-color 140ms var(--ease);
+}
+.copy-btn:hover { color: var(--text-0); border-color: var(--text-1); }
+.install-note { font-size: 13px; color: var(--text-2); margin-top: 10px; }
+
+/* ---------- Sections ---------- */
+section { padding: 104px 0 0; }
+h2 {
+  font-family: "Space Grotesk", sans-serif; font-weight: 600;
+  font-size: clamp(28px, 3.2vw, 38px); line-height: 1.15; letter-spacing: -0.015em;
+  margin-bottom: 14px;
+}
+.section-sub { color: var(--text-1); max-width: 58ch; margin-bottom: 44px; }
+
+/* How it works: the wire rail */
+.rail { position: relative; display: grid; gap: 40px; max-width: 720px; }
+.rail::before {
+  content: ""; position: absolute; left: 11px; top: 14px; bottom: 14px; width: 2px;
+  background: linear-gradient(180deg, var(--cyan), var(--violet), var(--green));
+  opacity: 0.7;
+}
+.step { position: relative; padding-left: 46px; }
+.step::before {
+  content: ""; position: absolute; left: 4px; top: 6px; width: 16px; height: 16px;
+  border-radius: 50%; background: var(--bg-0); border: 3px solid var(--dot, var(--cyan));
+}
+.step h3 { font-family: "Space Grotesk", sans-serif; font-weight: 600; font-size: 19px; margin-bottom: 6px; }
+.step p { color: var(--text-1); font-size: 15.5px; max-width: 52ch; }
+.step .term {
+  margin-top: 14px; border: 1px solid var(--line); background: var(--bg-1); border-radius: 10px;
+  padding: 12px 16px; font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--text-1);
+  overflow-x: auto; white-space: pre;
+}
+.step .term b { color: var(--green); font-weight: 400; }
+
+/* Feature splits */
+.feature { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.feature.flip .feature-copy { order: 2; }
+@media (max-width: 960px) { .feature { grid-template-columns: 1fr; gap: 36px; } .feature.flip .feature-copy { order: 0; } }
+.feature-copy h2 { margin-bottom: 16px; }
+.feature-copy p { color: var(--text-1); margin-bottom: 18px; max-width: 50ch; }
+.feature-points { list-style: none; padding: 0; display: grid; gap: 10px; }
+.feature-points li { display: flex; gap: 10px; font-size: 15px; color: var(--text-1); }
+.feature-points li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--pt, var(--accent)); margin-top: 8px; flex-shrink: 0; }
+.caption { font-size: 13px; color: var(--text-2); margin-top: 12px; }
+
+/* Showcase */
+.showcase .shot-frame { box-shadow: 0 30px 90px rgb(0 0 0 / 0.5); }
+
+/* License */
+.plans { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 760px) { .plans { grid-template-columns: 1fr; } }
+.plan {
+  border: 1px solid var(--line); border-radius: 16px; background: var(--bg-1); padding: 34px 32px;
+  display: flex; flex-direction: column; gap: 0;
+}
+.plan.research { border-color: rgb(255 178 36 / 0.45); background: linear-gradient(180deg, rgb(255 178 36 / 0.05), var(--bg-1) 45%); }
+.plan h3 { font-family: "Space Grotesk", sans-serif; font-size: 21px; font-weight: 600; margin-bottom: 4px; }
+.plan .price { font-family: "Space Grotesk", sans-serif; font-size: 38px; font-weight: 600; margin: 10px 0 2px; }
+.plan .price small { font-size: 15px; color: var(--text-1); font-family: "IBM Plex Sans", sans-serif; font-weight: 400; }
+.plan .who { color: var(--text-1); font-size: 14.5px; margin-bottom: 20px; }
+.plan ul { list-style: none; padding: 0; display: grid; gap: 9px; margin-bottom: 28px; }
+.plan li { display: flex; gap: 10px; font-size: 14.5px; color: var(--text-1); }
+.plan li::before { content: "✓"; color: var(--accent); font-weight: 600; }
+.plan .btn { margin-top: auto; justify-content: center; }
+
+/* Final CTA */
+.final { text-align: center; padding: 120px 0 96px; }
+.final h2 { font-size: clamp(30px, 3.8vw, 44px); margin-bottom: 14px; }
+.final p { color: var(--text-1); margin-bottom: 30px; }
+
+footer { border-top: 1px solid var(--line); padding: 36px 0 48px; }
+.foot { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; font-size: 13.5px; color: var(--text-2); }
+.foot a { color: var(--text-1); transition: color 140ms var(--ease); }
+.foot a:hover { color: var(--text-0); }
+.foot .fine { margin-left: auto; }
+@media (max-width: 760px) { .foot .fine { margin-left: 0; } }
+
+/* ---------- Motion ---------- */
+/* Reveals only apply when JS is running; without it the page is fully visible. */
+.js .reveal { opacity: 0; transform: translateY(22px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+.js .reveal.in { opacity: 1; transform: none; }
+.hero .reveal { transition-duration: 700ms; }
+.d1 { transition-delay: 70ms; } .d2 { transition-delay: 140ms; } .d3 { transition-delay: 210ms; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .btn, .copy-btn { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Axon home">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="11" r="3" fill="#ffb224"/><circle cx="17" cy="5" r="2.4" fill="#4cc9f0"/><circle cx="17" cy="17" r="2.4" fill="#b47aff"/><path d="M7.5 10L14.8 5.8M7.5 12L14.8 16.2" stroke="#33405a" stroke-width="1.6"/></svg>
+      AXON
+    </a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#examples">Examples</a>
+      <a href="#license">License</a>
+      <a href="https://github.com/Samyrrrrrr990/axon">GitHub</a>
+    </div>
+    <a class="btn btn-primary btn-small nav-cta" href="https://github.com/Samyrrrrrr990/axon">Get Axon</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="reveal">Real machine learning, built on a <span class="amber">canvas</span>.</h1>
+      <p class="hero-sub reveal d1">Axon is a local-first visual workspace for AI. Wire nodes together, press Run, and watch real models train on your machine.</p>
+      <div class="hero-ctas reveal d2">
+        <a class="btn btn-primary" href="https://github.com/Samyrrrrrr990/axon">Get Axon</a>
+        <a class="btn btn-outline" href="#how">See how it works</a>
+      </div>
+    </div>
+    <div class="reveal d2">
+      <div class="shot-frame">
+        <div class="shot-bar"><span></span><span></span><span></span></div>
+        <img src="assets/canvas.png" alt="The Axon canvas: a house-price model trained and evaluated visually, with metrics in the inspector" width="1440" height="900" fetchpriority="high" />
+      </div>
+    </div>
+  </div>
+  <div class="wrap install reveal d3">
+    <div class="install-box">
+      <code id="install-cmd">git clone https://github.com/Samyrrrrrr990/axon && cd axon && ./axon.sh</code>
+      <button class="copy-btn" id="copy" aria-label="Copy install command">Copy</button>
+    </div>
+    <p class="install-note">macOS and Linux, Windows through WSL. The environment is created for you; heavy libraries install only when a workflow needs them.</p>
+  </div>
+</header>
+
+<section id="how">
+  <div class="wrap">
+    <h2 class="reveal">From clone to trained model in three moves</h2>
+    <p class="section-sub reveal">No notebooks, no dependency hell, no boilerplate. The graph is the program.</p>
+    <div class="rail">
+      <div class="step reveal" style="--dot: var(--cyan)">
+        <h3>Install</h3>
+        <p>One command creates the environment and opens Axon in your browser at localhost:8700.</p>
+        <div class="term"><b>./axon.sh</b>
+  Axon is starting at http://127.0.0.1:8700</div>
+      </div>
+      <div class="step reveal" style="--dot: var(--violet)">
+        <h3>Wire</h3>
+        <p>Drag nodes from the palette onto the canvas. Sockets are typed and color-coded, so a dataset only plugs into something that accepts a dataset. Wrong connections refuse politely.</p>
+      </div>
+      <div class="step reveal" style="--dot: var(--green)">
+        <h3>Run</h3>
+        <p>Every node reports live status. Training nodes stream their loss curves as they learn. Change one node and only the affected part of the pipeline recomputes; the rest loads from cache instantly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap feature">
+    <div class="feature-copy">
+      <h2 class="reveal">Watch models learn in real time</h2>
+      <p class="reveal">Train scikit-learn, XGBoost, and PyTorch models locally. The loss curve falls live on the canvas, and every result is inspectable: tables, metrics, charts, confusion matrices.</p>
+      <ul class="feature-points reveal">
+        <li style="--pt: var(--violet)">A CNN, an MLP, a random forest, or LoRA fine-tuning of a language model, all on the same canvas</li>
+        <li style="--pt: var(--cyan)">Content-addressed caching makes re-runs feel instant</li>
+        <li style="--pt: var(--green)">Everything also runs headless from the command line</li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="shot-frame">
+        <div class="shot-bar"><span></span><span></span><span></span></div>
+        <img src="assets/confusion.png" alt="A convolutional network trained on handwritten digits in Axon, with its confusion matrix in the inspector" loading="lazy" width="1440" height="900" />
+      </div>
+      <p class="caption">A CNN trained on handwritten digits inside Axon: 95.8% test accuracy, confusion matrix in the inspector.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap feature flip">
+    <div class="feature-copy">
+      <h2 class="reveal">Describe it. The copilot wires it.</h2>
+      <p class="reveal">Tell the copilot what you want to build and it adds the nodes, wired and configured. It speaks a restricted graph-operations language, never arbitrary code, and every edit is validated against the type system before it touches your canvas.</p>
+      <ul class="feature-points reveal">
+        <li style="--pt: var(--accent)">Works with a free OpenRouter model out of the box</li>
+        <li style="--pt: var(--violet)">Swap in Claude, GPT, or a local Ollama model</li>
+        <li style="--pt: var(--cyan)">Every change is undoable</li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="shot-frame">
+        <div class="shot-bar"><span></span><span></span><span></span></div>
+        <img src="assets/copilot.png" alt="The Axon copilot sidebar suggesting workflows it can build" loading="lazy" width="1440" height="900" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="examples" class="showcase">
+  <div class="wrap">
+    <h2 class="reveal">Start from a working example</h2>
+    <p class="section-sub reveal">Five examples ship in the box, from a random forest on housing data to a tool-using research agent. Open one, press Run, then change anything. Each workflow is a single portable file you can send to a colleague.</p>
+    <div class="reveal">
+      <div class="shot-frame">
+        <div class="shot-bar"><span></span><span></span><span></span></div>
+        <img src="assets/gallery.png" alt="The Axon example gallery: classical ML, deep learning, fine-tuning, retrieval, and agents" loading="lazy" width="1440" height="900" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="license">
+  <div class="wrap">
+    <h2 class="reveal">Free where it matters. Paid where it's fair.</h2>
+    <p class="section-sub reveal">Axon's mission is accessible machine learning research. Commercial licensing is what keeps the free tier free, with no ads, no telemetry, and no feature gates.</p>
+    <div class="plans">
+      <div class="plan research reveal">
+        <h3>Research</h3>
+        <p class="price">$0 <small>forever</small></p>
+        <p class="who">For researchers, students, nonprofits, and personal projects.</p>
+        <ul>
+          <li>Every feature, every node, no limits</li>
+          <li>Runs entirely on your own hardware</li>
+          <li>Academic research, education, and evaluation</li>
+          <li>PolyForm Noncommercial 1.0.0</li>
+        </ul>
+        <a class="btn btn-primary" href="https://github.com/Samyrrrrrr990/axon">Get Axon</a>
+      </div>
+      <div class="plan reveal d1">
+        <h3>Commercial</h3>
+        <p class="price">Simple <small>flat licensing</small></p>
+        <p class="who">For for-profit research, development, and products built with Axon.</p>
+        <ul>
+          <li>Everything in Research</li>
+          <li>Commercial use rights</li>
+          <li>Priority answers from the maintainers</li>
+          <li>Pricing scaled to company size</li>
+        </ul>
+        <a class="btn btn-outline" href="https://github.com/Samyrrrrrr990/axon/issues/new?title=Commercial%20license%20inquiry">Ask about licensing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="final">
+  <div class="wrap">
+    <h2 class="reveal">Your first model is five minutes away.</h2>
+    <p class="reveal d1">Clone the repository, run one command, and open an example.</p>
+    <div class="reveal d2">
+      <a class="btn btn-primary" href="https://github.com/Samyrrrrrr990/axon">Get Axon</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top" style="font-size: 14px">
+      <svg width="18" height="18" viewBox="0 0 22 22" aria-hidden="true"><circle cx="5" cy="11" r="3" fill="#ffb224"/><circle cx="17" cy="5" r="2.4" fill="#4cc9f0"/><circle cx="17" cy="17" r="2.4" fill="#b47aff"/><path d="M7.5 10L14.8 5.8M7.5 12L14.8 16.2" stroke="#33405a" stroke-width="1.6"/></svg>
+      AXON
+    </a>
+    <a href="https://github.com/Samyrrrrrr990/axon">GitHub</a>
+    <a href="https://github.com/Samyrrrrrr990/axon/blob/main/docs/writing-nodes.md">Write a node</a>
+    <a href="https://github.com/Samyrrrrrr990/axon/blob/main/LICENSE.md">License</a>
+    <a href="https://github.com/Samyrrrrrr990/axon/blob/main/SECURITY.md">Security</a>
+    <span class="fine">Free for noncommercial research under PolyForm Noncommercial 1.0.0</span>
+  </div>
+</footer>
+
+<script>
+  document.documentElement.classList.add("js");
+  // Scroll reveals via IntersectionObserver (no scroll listeners).
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+  document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+  // Hero reveals fire immediately on load.
+  requestAnimationFrame(() => document.querySelectorAll(".hero .reveal").forEach((el) => el.classList.add("in")));
+
+  document.getElementById("copy").addEventListener("click", async () => {
+    const btn = document.getElementById("copy");
+    await navigator.clipboard.writeText(document.getElementById("install-cmd").textContent);
+    btn.textContent = "Copied";
+    setTimeout(() => (btn.textContent = "Copy"), 1600);
+  });
+</script>
+</body>
+</html>
