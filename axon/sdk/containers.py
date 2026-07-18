@@ -99,6 +99,7 @@ class TextDocs:
 class Embeddings:
     vectors: Any  # numpy ndarray (n_docs, dim)
     docs: TextDocs
+    meta: dict = field(default_factory=dict)  # e.g. {"embed_model": "..."}
 
     type_name: ClassVar[str] = "embeddings"
 
