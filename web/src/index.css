@@ -1,0 +1,134 @@
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/600.css";
+@import "@fontsource/ibm-plex-sans/400.css";
+@import "@fontsource/ibm-plex-sans/500.css";
+@import "@fontsource/ibm-plex-sans/600.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+@import "@fontsource/ibm-plex-mono/500.css";
+@import "tailwindcss";
+@import "@xyflow/react/dist/style.css";
+
+:root {
+  /* Instrument-panel palette */
+  --bg-0: #0b0e14;
+  --bg-1: #121722;
+  --bg-2: #1a2130;
+  --bg-3: #222b3d;
+  --line: #232c3d;
+  --line-bright: #33405a;
+  --text-0: #e8edf5;
+  --text-1: #8b96a8;
+  --accent: #ffb224;
+  --accent-dim: #b37b12;
+  --ok: #4ade80;
+  --err: #f87171;
+
+  /* Socket type colors — the type system, visible */
+  --sock-dataset: #4cc9f0;
+  --sock-model: #b47aff;
+  --sock-text: #6ee7a0;
+  --sock-metrics: #ffb224;
+  --sock-chart: #ff7dad;
+  --sock-docs: #7fb8ff;
+  --sock-embeddings: #5eead4;
+  --sock-vectorstore: #2dd4bf;
+  --sock-image: #f0a35e;
+  --sock-any: #94a3b8;
+
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  color: var(--text-0);
+  background: var(--bg-0);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.font-display {
+  font-family: "Space Grotesk", sans-serif;
+}
+.font-mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+
+/* ---------- React Flow overrides ---------- */
+.react-flow {
+  background: var(--bg-0);
+}
+.react-flow__background {
+  opacity: 0.5;
+}
+.react-flow__edge-path {
+  stroke-width: 2;
+}
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--accent) !important;
+}
+.react-flow__handle {
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--bg-0);
+}
+.react-flow__attribution {
+  display: none;
+}
+.react-flow__controls {
+  box-shadow: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.react-flow__controls-button {
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--line);
+  fill: var(--text-1);
+}
+.react-flow__controls-button:hover {
+  background: var(--bg-2);
+}
+.react-flow__minimap {
+  background: var(--bg-1) !important;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+/* Node status animations */
+@keyframes pulse-border {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px var(--accent), 0 0 12px 0 rgb(255 178 36 / 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 1px var(--accent), 0 0 22px 2px rgb(255 178 36 / 0.55);
+  }
+}
+.node-running {
+  animation: pulse-border 1.2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .node-running {
+    animation: none;
+    box-shadow: 0 0 0 1.5px var(--accent);
+  }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-bright);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
