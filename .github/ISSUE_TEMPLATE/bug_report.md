@@ -19,4 +19,4 @@ labels: bug
 - Python (`python --version`):
 - Axon version / commit:
 
-**Workflow file** (drag your `.axon.json` here if relevant — it contains no local paths)
+**Workflow file** (drag your `.axon.json` here if relevant; it contains no local paths)

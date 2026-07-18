@@ -50,7 +50,7 @@ export default function RunLogs() {
           <div key={nid}>
             <span style={{ color: "var(--err)" }}>{nid}</span>{" "}
             <span style={{ color: "var(--err)" }}>{e.error}</span>
-            {e.hint && <span style={{ color: "var(--text-1)" }}> — {e.hint}</span>}
+            {e.hint && <span style={{ color: "var(--text-1)" }}> Hint: {e.hint}</span>}
           </div>
         ))}
         {logs.length === 0 && Object.keys(errors).length === 0 && (

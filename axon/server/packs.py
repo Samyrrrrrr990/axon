@@ -1,4 +1,4 @@
-"""Lazy dependency packs — heavy ML libraries install on demand, not at first launch."""
+"""Lazy dependency packs: heavy ML libraries install on demand, not at first launch."""
 
 from __future__ import annotations
 

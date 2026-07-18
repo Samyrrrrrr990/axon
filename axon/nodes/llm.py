@@ -1,4 +1,4 @@
-"""LLM & agents pack — chat models, prompts, RAG, tools, and an agent loop.
+"""LLM and agents pack: chat models, prompts, RAG, tools, and an agent loop.
 
 Every node that calls an LLM is uncacheable: each Run makes fresh calls.
 """

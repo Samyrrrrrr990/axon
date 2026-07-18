@@ -1,4 +1,4 @@
-"""The Axon workspace: ~/.axon (or $AXON_HOME) — settings, cache, workflows, data, run history."""
+"""The Axon workspace at ~/.axon (or $AXON_HOME): settings, cache, workflows, data, run history."""
 
 from __future__ import annotations
 

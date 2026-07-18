@@ -1,7 +1,7 @@
 [project]
 name = "axon"
 version = "0.1.0"
-description = "Build real AI visually — train, fine-tune, and orchestrate models without writing code. Local-first."
+description = "Build real AI visually. Train, fine-tune, and orchestrate models without writing code. Local-first."
 readme = "README.md"
 license = { file = "LICENSE.md" }
 requires-python = ">=3.12,<3.13"

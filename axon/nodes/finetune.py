@@ -1,4 +1,4 @@
-"""Fine-tuning pack — LoRA-adapt pretrained Hugging Face models on your own text."""
+"""Fine-tuning pack: LoRA-adapt pretrained Hugging Face models on your own text."""
 
 from __future__ import annotations
 
@@ -72,7 +72,7 @@ def text_data(ctx, docs, hf_model, max_length):
     id="ft.lora_finetune",
     name="LoRA Fine-tune",
     category="Fine-tuning",
-    description="Efficiently fine-tune with LoRA adapters — watch the loss live.",
+    description="Efficiently fine-tune with LoRA adapters and watch the loss live.",
     inputs={"hf_model": "any", "tokenized": "any"},
     outputs={"model": "model"},
     params={
@@ -97,7 +97,7 @@ def lora_finetune(ctx, hf_model, tokenized, r, alpha, epochs, lr, batch_size, se
     config = LoraConfig(r=r, lora_alpha=alpha, task_type="CAUSAL_LM")
     model = get_peft_model(base_model, config)
     trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
-    ctx.log(f"LoRA attached — {trainable:,} trainable parameters")
+    ctx.log(f"LoRA attached: {trainable:,} trainable parameters")
 
     ids, mask = tokenized.value["input_ids"], tokenized.value["attention_mask"]
     loader = DataLoader(TensorDataset(ids, mask), batch_size=batch_size, shuffle=True)

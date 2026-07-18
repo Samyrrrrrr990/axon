@@ -1,4 +1,4 @@
-"""The @node decorator — declare a node's sockets and params; the UI is generated from this."""
+"""The @node decorator: declare a node's sockets and params, and the UI is generated from them."""
 
 from __future__ import annotations
 

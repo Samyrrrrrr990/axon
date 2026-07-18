@@ -94,7 +94,7 @@ def cmd_run(args) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="axon", description="Axon — build real AI visually.")
+    parser = argparse.ArgumentParser(prog="axon", description="Axon: build real AI visually.")
     sub = parser.add_subparsers(dest="command")
 
     p_start = sub.add_parser("start", help="Start the Axon app (server + browser)")

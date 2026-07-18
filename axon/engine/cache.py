@@ -42,7 +42,7 @@ class Cache:
             with path.open("wb") as f:
                 pickle.dump(outputs, f)
         except Exception:
-            # Some outputs (open model handles, lambdas) don't pickle — skip caching those.
+            # Some outputs (open model handles, lambdas) don't pickle; skip caching those.
             path.unlink(missing_ok=True)
 
     def clear(self) -> None:

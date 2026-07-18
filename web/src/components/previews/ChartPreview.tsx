@@ -39,7 +39,7 @@ function Heatmap({ chart }: { chart: ChartData }) {
   return (
     <div className="p-2">
       <div className="text-xs mb-2" style={{ color: AXIS_TEXT }}>
-        {chart.title} — rows: actual, columns: predicted
+        {chart.title} (rows: actual, columns: predicted)
       </div>
       <div
         className="grid gap-[2px] font-mono text-xs"

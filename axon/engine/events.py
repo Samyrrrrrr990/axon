@@ -1,4 +1,4 @@
-"""Run events — the single stream that feeds the WebSocket, run history, and CLI output."""
+"""Run events: the single stream that feeds the WebSocket, run history, and CLI output."""
 
 from __future__ import annotations
 

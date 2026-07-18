@@ -274,7 +274,7 @@ export const useStore = create<AxonState>((set, get) => ({
   runWorkflow: async () => {
     const wf = get().toWorkflow();
     if (wf.nodes.length === 0) {
-      set({ toast: "Add some nodes first — try an example from the gallery." });
+      set({ toast: "Add some nodes first, or open an example from the gallery." });
       return;
     }
     try {
@@ -306,7 +306,7 @@ export const useStore = create<AxonState>((set, get) => ({
       set({ packInstallLog: log });
       if (e.data.done) {
         s.loadCatalog();
-        set({ toast: e.data.success ? `${pack} installed` : `${pack} install failed — see Settings` });
+        set({ toast: e.data.success ? `${pack} installed` : `${pack} install failed. See Settings` });
       }
       return;
     }

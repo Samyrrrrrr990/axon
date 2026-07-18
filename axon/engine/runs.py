@@ -1,4 +1,4 @@
-"""RunManager — starts runs on worker threads, fans out events, tracks live run state."""
+"""RunManager: starts runs on worker threads, fans out events, tracks live run state."""
 
 from __future__ import annotations
 

@@ -1,6 +1,6 @@
 // Chart tokens validated with the dataviz palette checker against #0b0e14.
 export const SERIES = ["#C4820A", "#1E9BC4", "#2AA95F", "#9D63EA", "#E05C8F"];
-export const LOSS_LINE = "#FFB224"; // single-series live curve — bright signal amber
+export const LOSS_LINE = "#FFB224"; // single-series live curve, bright signal amber
 export const GRID = "#232c3d";
 export const AXIS_TEXT = "#8b96a8";
 export const TOOLTIP_STYLE = {

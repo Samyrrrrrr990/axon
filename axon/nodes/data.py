@@ -1,4 +1,4 @@
-"""Data pack — loading, sampling, splitting, and cleaning tabular data."""
+"""Data pack: loading, sampling, splitting, and cleaning tabular data."""
 
 from __future__ import annotations
 
@@ -43,7 +43,7 @@ def load_excel(ctx, path, sheet):
     id="data.sample_dataset",
     name="Sample Dataset",
     category="Data",
-    description="Classic datasets for experimenting — no files needed.",
+    description="Classic datasets for experimenting. No files required.",
     outputs={"dataset": "dataset"},
     params={
         "name": Choice(
@@ -196,7 +196,7 @@ def encode(ctx, dataset, method):
         if pd.api.types.is_string_dtype(df[c]) or isinstance(df[c].dtype, pd.CategoricalDtype)
     ]
     if not cat_cols:
-        ctx.log("No categorical feature columns found — passing data through unchanged")
+        ctx.log("No categorical feature columns found; passing data through unchanged")
         return {"dataset": dataset}
     if method == "onehot":
         df = pd.get_dummies(df, columns=cat_cols, dtype=int)

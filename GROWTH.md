@@ -1,64 +1,78 @@
-# Axon growth playbook
+# Growth playbook
+
+Internal document. This is the launch and community plan for Axon.
 
 ## Positioning
 
-One sentence: **"n8n for machine learning — train, fine-tune, and orchestrate real AI models visually, on your own machine, free for research."**
+One sentence: "n8n for machine learning: train, fine-tune, and orchestrate real AI models visually, on your own machine, free for research."
 
-The three claims that make people click:
-1. It trains *real* models (not another ChatGPT wrapper).
-2. It runs locally and is free for research (privacy + accessibility story).
-3. The copilot builds the graph for you (the "replaces coding" demo moment).
+Three claims carry the pitch:
 
-The demo that sells it: a 30-second GIF — open example → press Run → loss curve falls live → ask copilot "add a confusion matrix" → nodes appear wired.
+1. It trains real models locally, not just calls to a chat API.
+2. It is free for research and runs on your own hardware, which is both a privacy story and an accessibility story.
+3. The copilot assembles graphs from plain descriptions.
+
+The demo that sells it is a 30-second recording: open an example, press Run, watch the loss curve fall, then ask the copilot to add a confusion matrix and watch the nodes appear already wired.
 
 ## Launch sequence
 
-Do these in order, ~3–5 days apart, so each wave compounds the last.
+Space these three to five days apart so each wave builds on the previous one.
 
-### 1. Polish pass (before any post)
-- [ ] Record the 30-second GIF (QuickTime + gifski) and put it at the top of the README.
-- [ ] Verify `git clone` → `./axon.sh` works on a clean machine (macOS + Linux).
-- [ ] Seed 3–5 GitHub issues labeled `good first issue` (each a small node: "Load JSON", "Correlation matrix", "PCA").
+### 1. Polish pass, before any post
+
+- Record the 30-second demo and place it at the top of the README.
+- Verify that `git clone` then `./axon.sh` works on a clean macOS and a clean Linux machine.
+- Seed three to five issues labeled `good first issue`, each a small self-contained node such as "Load JSON", "Correlation matrix", or "PCA".
 
 ### 2. Show HN
-- Title: `Show HN: Axon – n8n for machine learning (train real models visually, locally)`
-- First comment (post it yourself immediately): what it is, why you built it (ML research is gated behind coding skill), what works today (47 nodes, 3 domains, copilot), what doesn't yet (roadmap), the licensing model, and a direct ask for feedback on the node SDK.
-- Be online for 6 hours answering everything. HN rewards responsive founders.
 
-### 3. Reddit (staggered, tailored — never cross-post identical text)
-- **r/MachineLearning** (`[P]` tag): lead with the *research accessibility* angle and the caching/experiment-iteration story.
-- **r/LocalLLaMA**: lead with local LoRA fine-tuning + Ollama support + "your data never leaves your machine."
-- **r/selfhosted**: lead with the one-command local install and the fair-code license.
-- **r/datascience**: lead with "teach ML without teaching Python first" (educators are a huge quiet audience).
+Suggested title: `Show HN: Axon, an n8n-style visual builder for training real ML models locally`.
+
+Post a first comment immediately covering: what it is, why you built it (ML research is gated behind coding skill), what works today, what does not work yet, and the licensing model. End with a direct question about the node SDK to invite specific feedback. Stay online for six hours and answer everything.
+
+### 3. Reddit
+
+Tailor each post to the community. Do not cross-post identical text.
+
+| Subreddit | Angle |
+|---|---|
+| r/MachineLearning (`[P]` tag) | research accessibility, caching and iteration speed |
+| r/LocalLLaMA | local LoRA fine-tuning, Ollama support, data never leaves the machine |
+| r/selfhosted | one-command local install, source-available license |
+| r/datascience | teaching ML without teaching Python first |
 
 ### 4. Product Hunt
-- Launch after HN/Reddit so you arrive with stars and testimonials.
-- Assets: the GIF, 4 screenshots (canvas, live training, copilot, gallery), a 60-second video.
 
-### 5. Content drumbeat (1/week)
-- "I trained a house-price model without writing a line of code" (walkthrough)
-- "Fine-tuning GPT-2 on my own quotes, visually" (fine-tuning audience)
-- "How Axon's caching makes ML iteration feel instant" (technical deep-dive, HN-bait)
-- "Building a research agent with tools — no framework, just nodes"
+Launch after the HN and Reddit waves so the page arrives with stars and quotes. Assets needed: the demo recording, four screenshots (canvas, live training, copilot, gallery), and a 60-second video.
 
-## The community flywheel
+### 5. Content, one piece per week
 
-1. **Workflows are shareable files** → encourage a `#show-your-workflow` channel/discussion; retweet/repost everything.
-2. **Nodes are 20 lines** → every "can Axon do X?" answer is "here's the 20-line node, want to PR it?" Contributors become evangelists.
-3. **Examples gallery grows from community workflows** → merge good ones into `examples/` with credit.
-4. Later: a registry (`axon-packs`) indexing community packs; the n8n/Obsidian plugin-ecosystem play.
+- A walkthrough of training a house-price model with no code
+- Fine-tuning GPT-2 on your own text, visually
+- A technical deep-dive on the caching design
+- Building a research agent with tools, using only nodes
 
-## Channels to set up (day 1, zero cost)
-- [ ] GitHub Discussions on (Q&A + Show and tell categories)
-- [ ] Discord server (invite link in README) — #help, #show-your-workflow, #node-dev
-- [ ] Twitter/X + Bluesky account posting GIFs of workflows
+## Community flywheel
 
-## Metrics that matter (weekly)
-- GitHub stars (vanity but drives discovery), **clones→first-run rate** (the real funnel), examples opened, workflows shared, node-pack PRs, Discord members asking questions (activation signal).
+1. Workflows are single shareable files. Create a "show your workflow" channel and repost everything good.
+2. Nodes take 20 lines. Every "can Axon do X" question gets the answer "here is the node, want to PR it?" Contributors tend to become advocates.
+3. The examples gallery grows from community workflows, merged with credit.
+4. Later: a registry that indexes community node packs, following the n8n and Obsidian plugin ecosystem model.
 
-## Monetization path (when traction arrives)
-1. Now: commercial licenses via COMMERCIAL_LICENSE.md inquiries.
-2. Next: hosted Axon (same codebase, cloud runs, team workspaces) — the n8n cloud model.
-3. Later: priority support + certified packs for commercial users.
+## Channels to set up on day one
 
-Keep the free tier genuinely great forever — the noncommercial community IS the product's moat.
+- GitHub Discussions with Q&A and Show-and-tell categories
+- A Discord server with help, show-your-workflow, and node-dev channels, linked from the README
+- A social account that posts short recordings of workflows
+
+## Metrics
+
+Watch weekly: stars (drives discovery), the clone-to-first-run rate (the real funnel), examples opened, workflows shared, node pack pull requests, and the number of new people asking questions (an activation signal).
+
+## Monetization path
+
+1. Now: commercial licenses through COMMERCIAL_LICENSE.md inquiries.
+2. Next: a hosted version of the same codebase with cloud runs and team workspaces.
+3. Later: priority support and certified packs for commercial customers.
+
+The noncommercial community is the moat. The free tier stays genuinely good.

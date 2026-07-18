@@ -23,7 +23,7 @@
   --ok: #4ade80;
   --err: #f87171;
 
-  /* Socket type colors — the type system, visible */
+  /* Socket type colors: the type system, visible */
   --sock-dataset: #4cc9f0;
   --sock-model: #b47aff;
   --sock-text: #6ee7a0;

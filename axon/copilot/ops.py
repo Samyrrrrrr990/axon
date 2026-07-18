@@ -1,4 +1,4 @@
-"""Graph operations — the only thing the copilot is allowed to emit. Never code."""
+"""Graph operations: the only thing the copilot is allowed to emit. Never code."""
 
 from __future__ import annotations
 

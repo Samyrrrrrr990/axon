@@ -20,7 +20,7 @@
     { "id": "e7", "source": "split", "source_socket": "test", "target": "confusion", "target_socket": "test" }
   ],
   "meta": {
-    "description": "Train a small CNN on 8×8 handwritten digits — watch the loss curve fall live, then inspect the confusion matrix.",
+    "description": "Train a small CNN on 8x8 handwritten digits. Watch the loss curve fall live, then inspect the confusion matrix.",
     "domain": "deep-learning",
     "requires_packs": ["deep"],
     "requires_keys": []

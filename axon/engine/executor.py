@@ -24,7 +24,7 @@ def _hint_for(exc: Exception) -> str | None:
         )
     text = str(exc)
     if "shapes" in text or "shape" in text and "mismatch" in text:
-        return "The data shape doesn't match what this node expects — check upstream columns."
+        return "The data shape doesn't match what this node expects. Check the upstream columns."
     if "could not convert string to float" in text:
         return "This node needs numeric data. Add an Encode Categorical node before it."
     if "NaN" in text or "missing" in text.lower():

@@ -1,23 +1,50 @@
+<div align="center">
+
 # Axon
 
-**Build real AI visually — train, fine-tune, and orchestrate models without writing code.**
+**Build real AI visually. Train, fine-tune, and orchestrate machine learning models on your own machine, without writing code.**
 
-Axon is what n8n did for automation, applied to machine learning. Drag nodes onto a canvas, wire them together, press Run: load a dataset, train a random forest or a neural network, LoRA-finetune a language model, or compose a RAG pipeline with agents — all on your own machine, no code required. (You can still drop into Python anytime with the code node. But why?)
+[![CI](https://github.com/Samyrrrrrr990/axon/actions/workflows/ci.yml/badge.svg)](https://github.com/Samyrrrrrr990/axon/actions/workflows/ci.yml)
+[![License: PolyForm Noncommercial](https://img.shields.io/badge/license-PolyForm%20Noncommercial-blue.svg)](LICENSE.md)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-3776AB.svg)](pyproject.toml)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-![Axon canvas — a house-price model trained and evaluated visually](docs/assets/canvas.png)
+[Quickstart](#quickstart) ·
+[Examples](#examples) ·
+[Nodes](#node-reference) ·
+[Architecture](docs/architecture.md) ·
+[Contributing](CONTRIBUTING.md) ·
+[License](#license)
 
-## Why Axon
+</div>
 
-- **Real ML, not just API calls.** Train scikit-learn, XGBoost, and PyTorch models locally. Watch the loss curve fall in real time.
-- **Fine-tune LLMs visually.** LoRA fine-tuning of Hugging Face models as a five-node graph.
-- **LLM pipelines & agents.** RAG over your own documents, tools, agent loops — with free OpenRouter models, Claude/GPT, or local Ollama.
-- **A copilot that builds graphs.** Type "train a model that predicts house prices from this CSV" and watch the nodes appear, wired and configured. It emits graph operations, never code.
-- **Smart caching.** Change one node, re-run, and only the changed part of the pipeline recomputes. Iteration feels instant.
-- **Local-first.** Your data never leaves your machine unless you explicitly connect a cloud model. Workflows are single portable `.axon.json` files — send one to a colleague.
+---
 
-## Quickstart (60 seconds)
+Axon is a visual, node-based workspace for machine learning, in the way n8n is a visual workspace for automation. You drag nodes onto a canvas, wire them together, and press Run. The graph loads your data, trains a model, evaluates it, and charts the results. The same canvas covers LoRA fine-tuning of pretrained language models and LLM pipelines with retrieval and agents.
 
-Requires [uv](https://docs.astral.sh/uv/) (`curl -LsSf https://astral.sh/uv/install.sh | sh`).
+Everything runs locally. Your data stays on your machine unless you connect a cloud model provider yourself.
+
+![The Axon canvas showing a trained house-price model with evaluation metrics](docs/assets/canvas.png)
+
+## Features
+
+- **Real model training.** scikit-learn, XGBoost, and PyTorch run locally. Training nodes stream their loss curves to the canvas in real time.
+- **Visual fine-tuning.** LoRA fine-tuning of Hugging Face models is a five-node graph: load, tokenize, tune, generate, save.
+- **LLM pipelines and agents.** Retrieval over your own documents, structured extraction, tool definitions, and agent loops. Works with free OpenRouter models, Anthropic, OpenAI, or local Ollama.
+- **A copilot that edits the graph.** Describe what you want and the copilot adds configured, wired nodes. It emits validated graph operations, never arbitrary code, and every change can be undone.
+- **Incremental caching.** Node outputs are cached by content. Change one node and only the affected part of the pipeline recomputes.
+- **Portable workflows.** Each workflow is a single `.axon.json` file with no machine-specific paths. Send it to a colleague and it opens on their machine.
+- **Code when you want it.** A Python node accepts arbitrary code for anything the built-in nodes do not cover.
+
+## Quickstart
+
+Axon needs [uv](https://docs.astral.sh/uv/), which manages its Python environment for you:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Then:
 
 ```bash
 git clone https://github.com/Samyrrrrrr990/axon.git
@@ -25,46 +52,77 @@ cd axon
 ./axon.sh
 ```
 
-Your browser opens at `http://localhost:8700` with a gallery of examples. Open **Predict House Prices**, press **Run**, and watch a model train. The core install is light; heavy packs (PyTorch, Transformers, RAG) install with one click when you first need them.
+Your browser opens at `http://localhost:8700` with a gallery of examples. Open "Predict House Prices", press Run, and watch a model train.
 
-Run any workflow headless, too:
+The core install is small. Heavier capabilities (PyTorch, Transformers, vector search) are grouped into packs that install with one click the first time a workflow needs them.
+
+Workflows also run headless, which is how CI runs them:
 
 ```bash
 uv run python -m axon run examples/house-prices.axon.json
 ```
 
-## What's in the box
+## Examples
 
-| Domain | Nodes |
+Five example workflows ship with the app and open from the in-app gallery.
+
+| Example | Domain | Requirements |
+|---|---|---|
+| Predict House Prices | Classical ML | none, runs offline |
+| Handwritten Digit Classifier | Deep learning | `deep` pack (PyTorch) |
+| Fine-tune a Tiny LLM | Fine-tuning | `finetune` pack |
+| Chat With Your Documents | Retrieval | `rag` pack, one API key |
+| Research Agent | Agents | one API key |
+
+The API key for the last two can be a free key from [openrouter.ai/keys](https://openrouter.ai/keys).
+
+## Node reference
+
+Axon ships with 47 nodes in six groups.
+
+| Group | Nodes |
 |---|---|
-| Data | CSV/Excel, sample datasets, Hugging Face datasets, split, scale, encode, impute |
-| Classical ML | linear/logistic regression, random forest, XGBoost, k-means, evaluate, confusion matrix |
-| Deep learning | MLP/CNN builders, PyTorch trainer with live loss, evaluate, ONNX/TorchScript export |
-| Fine-tuning | pretrained model loader, tokenizer, LoRA fine-tune, generate, save adapter |
-| LLM & agents | chat models (OpenRouter/Anthropic/OpenAI/Ollama), prompts, structured extract, embeddings, vector store, RAG, tools, agent loop |
-| Utility | Python code (the escape hatch), charts, table/metric viewers, file output |
+| Data | CSV and Excel loaders, sample datasets, Hugging Face datasets, train/test split, scaling, encoding, imputation |
+| Classical ML | linear and logistic regression, random forest, XGBoost, k-means, evaluation, confusion matrix, prediction |
+| Deep learning | MLP and CNN builders, PyTorch trainer with live loss, evaluation, export to ONNX and TorchScript |
+| Fine-tuning | pretrained model loader, tokenizer, LoRA fine-tuning, text generation, adapter export |
+| LLM and agents | chat models, prompt templates, structured extraction, embeddings, vector store, retrieval, tools, agent loop |
+| Utility | Python code, charts, table and metric viewers, text input and output, file export |
 
-47 nodes at launch. Writing your own takes ~20 lines of Python — see [docs/writing-nodes.md](docs/writing-nodes.md).
+A node is a decorated Python function. The palette entry, form fields, typed sockets, and output previews are all generated from its declaration, so adding a node takes about 20 lines. See [docs/writing-nodes.md](docs/writing-nodes.md).
 
 ## The copilot
 
-Open the Copilot sidebar, paste a free [OpenRouter key](https://openrouter.ai/keys), and describe what you want. The copilot reads your graph and the node catalog, then emits validated graph edits you can undo. Swap in Claude, GPT, or a local Ollama model in Settings.
+The copilot reads your current graph and the node catalog, then answers questions or edits the graph directly. It communicates in a restricted operations format (add node, connect, set parameters), and every edit is validated against the type system before it reaches your canvas.
 
-## License: free for research, paid for profit
+By default it uses a free model through OpenRouter. You can switch to Anthropic, OpenAI, or a local Ollama model in Settings. Keys are stored locally and are only sent to the provider you choose.
 
-Axon is [PolyForm Noncommercial](LICENSE.md): **free forever** for academic research, non-profits, personal projects, and learning. For-profit use requires a [commercial license](COMMERCIAL_LICENSE.md) — that's what funds free access for everyone else.
+## Architecture
 
-## Roadmap
+One Python process serves the REST and WebSocket API and the built React frontend. The execution engine runs workflows in topological order on worker threads, streams per-node status and metrics over WebSocket, and caches node outputs on disk. See [docs/architecture.md](docs/architecture.md) for the full picture.
 
-- Community node packs (pip-installable, auto-discovered)
-- Workflow sharing gallery
-- Experiment tracking & run comparison
-- Hosted cloud option for teams
+| Layer | Technology |
+|---|---|
+| Frontend | React, TypeScript, React Flow, Zustand, Tailwind CSS, Recharts |
+| API | FastAPI, WebSocket, Pydantic |
+| Engine | pure Python, content-addressed caching, SQLite run history |
+| ML | scikit-learn, XGBoost, PyTorch, Transformers, PEFT, ChromaDB |
+
+## Project status
+
+Axon is at v0.1. The engine, all six node packs, the copilot, and the examples are covered by 120 tests plus an end-to-end browser test, and CI runs the full suite on every push. APIs may still change between minor versions.
+
+Planned next: community node packs with automatic discovery, a workflow sharing gallery, experiment tracking with run comparison, and a hosted option for teams.
 
 ## Contributing
 
-The fastest way to help: build a node pack. See [CONTRIBUTING.md](CONTRIBUTING.md) — your first node in 20 lines. Bug reports and example workflows are equally welcome.
+The most useful contribution is a node pack. A node is a small Python function and the UI comes free; [CONTRIBUTING.md](CONTRIBUTING.md) walks through writing your first one. Bug reports with a `.axon.json` file attached are easy to reproduce and very welcome.
 
----
+## License
 
-Built with FastAPI, React Flow, scikit-learn, PyTorch, and the conviction that ML research shouldn't require a CS degree.
+Axon is licensed under [PolyForm Noncommercial 1.0.0](LICENSE.md).
+
+- **Free** for academic research, non-profit organizations, personal projects, education, and evaluation.
+- **Commercial use requires a license.** See [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md) for how to get one.
+
+Commercial licensing is what funds free access for researchers. If you are unsure which side you fall on, open an issue and ask.

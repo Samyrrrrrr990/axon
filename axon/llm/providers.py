@@ -12,7 +12,7 @@ class ProviderError(Exception):
 
 
 KEY_HELP = {
-    "openrouter": "Add your free OpenRouter key in Settings — get one at openrouter.ai/keys",
+    "openrouter": "Add your free OpenRouter key in Settings. Get one at openrouter.ai/keys",
     "openai": "Add your OpenAI API key in Settings.",
     "anthropic": "Add your Anthropic API key in Settings.",
 }

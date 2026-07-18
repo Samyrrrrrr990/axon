@@ -60,7 +60,7 @@ export default function Palette() {
                     onClick={() => setStore({ settingsOpen: true })}
                     className="ml-auto text-[10px] px-1.5 py-0.5 rounded font-mono"
                     style={{ background: "var(--bg-3)", color: "var(--accent)" }}
-                    title={`Needs the ${packs[packName].label} pack — click to install in Settings`}
+                    title={`Needs the ${packs[packName].label} pack. Click to install in Settings`}
                   >
                     install
                   </button>

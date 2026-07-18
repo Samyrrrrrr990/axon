@@ -71,7 +71,7 @@ export default function Gallery() {
         </div>
         {examples.length === 0 && (
           <div className="text-xs" style={{ color: "var(--text-1)" }}>
-            No examples found — they live in the repo's examples/ folder.
+            No examples found. They live in the repo's examples/ folder.
           </div>
         )}
       </div>

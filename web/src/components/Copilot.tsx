@@ -69,7 +69,7 @@ export default function Copilot() {
         {messages.length === 0 && (
           <div className="space-y-2">
             <div className="text-xs" style={{ color: "var(--text-1)" }}>
-              Describe what you want to build — the copilot assembles the nodes. Try:
+              Describe what you want to build and the copilot assembles the nodes. Try:
             </div>
             {SUGGESTIONS.map((s) => (
               <button

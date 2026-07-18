@@ -11,7 +11,7 @@ from axon.sdk.registry import Registry
 
 SYSTEM_PROMPT = """You are Axon's copilot. Axon is a visual AI-building tool: users wire nodes \
 into graphs that load data, train ML models, fine-tune LLMs, and build agent pipelines. \
-You edit the user's graph by emitting operations — you NEVER write or emit code.
+You edit the user's graph by emitting operations. You NEVER write or emit code.
 
 Respond with a single JSON object:
 {"reply": "<short friendly explanation of what you did or your answer>",
@@ -30,7 +30,7 @@ Rules:
 - Sockets connect only when types match (or one side is "any").
 - Every required input socket of every node you add must be connected.
 - For pure questions, answer in "reply" with "ops": [].
-- Keep graphs minimal — no dangling or decorative nodes.
+- Keep graphs minimal, with no dangling or decorative nodes.
 
 NODE CATALOG:
 {catalog}
@@ -108,7 +108,7 @@ def copilot_chat(graph: dict, messages: list[dict], registry: Registry, settings
         ]
 
     return {
-        "reply": reply_text or "Sorry — I couldn't produce a valid graph edit for that. "
+        "reply": reply_text or "Sorry, I couldn't produce a valid graph edit for that. "
                                "Try describing the change differently.",
         "workflow": None,
         "ops_applied": 0,

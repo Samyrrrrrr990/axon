@@ -1,4 +1,4 @@
-"""Classical ML pack — scikit-learn and XGBoost models, evaluation, prediction."""
+"""Classical ML pack: scikit-learn and XGBoost models, evaluation, prediction."""
 
 from __future__ import annotations
 
@@ -42,7 +42,7 @@ def _predict_frame(model: Model, dataset: Dataset):
     id="ml.linear_regression",
     name="Linear Regression",
     category="Classical ML",
-    description="The simplest regression model — a straight-line fit.",
+    description="The simplest regression model: a straight-line fit.",
     inputs={"train": "dataset"},
     outputs={"model": "model"},
 )
@@ -71,7 +71,7 @@ def logistic_regression(ctx, train, max_iter):
     id="ml.random_forest",
     name="Random Forest",
     category="Classical ML",
-    description="An ensemble of decision trees — strong default for tabular data.",
+    description="An ensemble of decision trees, a strong default for tabular data.",
     inputs={"train": "dataset"},
     outputs={"model": "model"},
     params={
@@ -93,7 +93,7 @@ def random_forest(ctx, train, task, n_estimators, max_depth, seed):
     id="ml.xgboost",
     name="XGBoost",
     category="Classical ML",
-    description="Gradient-boosted trees — often the top performer on tabular data.",
+    description="Gradient-boosted trees, often the top performer on tabular data.",
     inputs={"train": "dataset"},
     outputs={"model": "model"},
     params={
@@ -116,7 +116,7 @@ def xgboost(ctx, train, task, n_estimators, learning_rate, seed):
     id="ml.kmeans",
     name="K-Means Clustering",
     category="Classical ML",
-    description="Group similar rows into clusters — no target column needed.",
+    description="Group similar rows into clusters. No target column is needed.",
     inputs={"train": "dataset"},
     outputs={"model": "model", "labeled": "dataset"},
     params={"clusters": Int(default=3, min=2), "seed": Int(default=42)},

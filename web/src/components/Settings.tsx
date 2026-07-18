@@ -3,9 +3,9 @@ import { api } from "../api";
 import { useStore } from "../store";
 
 const KEY_FIELDS = [
-  { id: "openrouter", label: "OpenRouter", help: "Free — create a key at openrouter.ai/keys. Powers the copilot by default." },
-  { id: "anthropic", label: "Anthropic", help: "Optional — for Claude models." },
-  { id: "openai", label: "OpenAI", help: "Optional — for GPT models." },
+  { id: "openrouter", label: "OpenRouter", help: "Free. Create a key at openrouter.ai/keys. Powers the copilot by default." },
+  { id: "anthropic", label: "Anthropic", help: "Optional, for Claude models." },
+  { id: "openai", label: "OpenAI", help: "Optional, for GPT models." },
 ];
 
 export default function Settings() {

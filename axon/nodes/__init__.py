@@ -1,6 +1,6 @@
 """Built-in node packs. Importing this module registers every available node.
 
-Modules whose heavy dependencies aren't installed are skipped gracefully —
+Modules whose heavy dependencies aren't installed are skipped gracefully;
 their nodes simply don't appear until the pack is installed from Settings.
 """
 

@@ -1,24 +1,24 @@
-# Axon Commercial License
+# Commercial licensing
 
-Axon is free for **noncommercial use** under the [PolyForm Noncommercial License 1.0.0](./LICENSE.md). That covers:
+Axon is free for noncommercial use under the [PolyForm Noncommercial License 1.0.0](LICENSE.md). That covers:
 
 - Academic and non-profit research
 - Personal projects and learning
-- Use by charitable organizations, educational institutions, government institutions, and public research organizations
+- Use by charities, educational institutions, government bodies, and public research organizations
+- Evaluation, in any organization, before a purchase decision
 
 ## When you need a commercial license
 
-If you use Axon **for or on behalf of a for-profit purpose** — for example, commercial R&D, building models that ship in a paid product, or running Axon as part of a revenue-generating service — you need a commercial license.
+You need a commercial license when you use Axon for a for-profit purpose. Typical cases:
 
-## Getting one
+- Research and development inside a for-profit company
+- Building or shipping models that end up in a paid product or service
+- Running Axon as part of a revenue-generating workflow
 
-Commercial licensing is simple and priced to be a no-brainer compared to the engineering time Axon saves you.
+## How to get one
 
-- Open an issue titled `Commercial license inquiry` on this repository, or
-- Contact the maintainer through the email listed on their GitHub profile.
-
-Tell us roughly: company size, what you're using Axon for, and whether you need support. We'll get back to you quickly.
+Open an issue on this repository titled `Commercial license inquiry`, or contact the maintainer through the email on their GitHub profile. Include three things: your company size, what you plan to use Axon for, and whether you need support. You will get a response quickly, and pricing is deliberately simple.
 
 ## Why this model
 
-Axon's mission is to make machine-learning research accessible to everyone. Noncommercial users fund nothing and get everything. Commercial users fund the development that keeps it that way.
+Axon's goal is to make machine learning research accessible. Researchers, students, and non-profits pay nothing. Companies that profit from Axon fund its development. This keeps the free tier free without advertising, telemetry, or feature gating.

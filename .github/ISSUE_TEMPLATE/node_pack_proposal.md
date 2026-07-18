@@ -13,4 +13,4 @@ labels: node-pack
 **Heavy dependencies?** (would this be a lazy pack, and roughly how big)
 
 
-**Are you up for implementing it?** (see CONTRIBUTING.md — a node is ~20 lines; we'll help)
+**Are you up for implementing it?** (see CONTRIBUTING.md, a node is about 20 lines, and we will help)

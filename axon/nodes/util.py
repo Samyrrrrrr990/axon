@@ -1,4 +1,4 @@
-"""Utility pack — the code escape hatch, charts, viewers, and file output."""
+"""Utility pack: the code escape hatch, charts, viewers, and file output."""
 
 from __future__ import annotations
 
@@ -99,7 +99,7 @@ def view_image(ctx, image):
     id="util.text_input",
     name="Text Input",
     category="Utility",
-    description="A piece of text to feed into the graph — a prompt, a question, a task.",
+    description="A piece of text to feed into the graph: a prompt, a question, a task.",
     outputs={"text": "text"},
     params={"text": Text(default="", help="The text to emit")},
 )

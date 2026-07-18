@@ -183,7 +183,7 @@ export default function Inspector() {
             ))
           ) : (
             <div className="text-xs" style={{ color: "var(--text-1)" }}>
-              This node has no settings — wire it up and run.
+              This node has no settings. Wire it up and run.
             </div>
           )
         ) : (

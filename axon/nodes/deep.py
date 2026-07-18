@@ -1,4 +1,4 @@
-"""Deep learning pack — build and train PyTorch networks with live loss streaming."""
+"""Deep learning pack: build and train PyTorch networks with live loss streaming."""
 
 from __future__ import annotations
 
@@ -47,7 +47,7 @@ def _build_net(arch: dict, input_dim: int, output_dim: int):
             prev = ch
             side //= 2
         if side < 1:
-            raise ValueError("Too many CNN layers for this image size — remove some channels.")
+            raise ValueError("Too many CNN layers for this image size. Remove some channels.")
         layers += [nn.Flatten(), nn.Linear(prev * side * side, output_dim)]
         return nn.Sequential(*layers)
 
@@ -93,7 +93,7 @@ def cnn(ctx, channels, kernel):
     id="deep.trainer",
     name="Train Neural Net",
     category="Deep Learning",
-    description="Train a network on your data — watch the loss curve live.",
+    description="Train a network on your data and watch the loss curve live.",
     inputs={"train": "dataset", "arch": "any"},
     outputs={"model": "model"},
     params={
